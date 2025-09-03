@@ -247,4 +247,4 @@ VPA:
 ![Login Page](static/Screenshot/Screenshot%20(678).png)
 
 #### Occupied Parking Spot
-![Login Page](static/Screenshot/Screenshot%20(671).png)
+![Login Page](static/Screenshot/Screenshot%20(679).png)
