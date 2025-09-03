@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+
+<body>
+    <div id="main">
+        <nav class="navbar navbar-expand-lg text-white bg-dark bg-gradient p-3 ">
+            <div class="container-fluid">
+                <a class="navbar-brand text-light" href="/dashboard/admin">Welcome Admin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/dashboard/admin">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/user_details">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/search_users">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light  btn disabled active" href="/admin_summary">Summary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/login">Log out</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <a href="/edit-details/{{user.id}}" class="btn btn-outline-primary" style="color: aliceblue;"
+                            id="edit">Edit Profile</a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="canvas" class="overflow-auto">
+        <h1 class="text-center text-light"> Your Summary</h1>
+        <div class="d-flex justify-content-evenly text-center">
+            <div class="card bg-danger p-3 me-5 " style="color: white;">
+                <h5>Occupied</h5>
+                <h1>{{active}}</h1>
+            </div>
+            <div class="card bg-success p-3 me-5" style="color: white;">
+                <h5>Parked Out</h5>
+                <h1>{{previous}}</h1>
+            </div>
+            <div class="card bg-secondary p-3" style="color: white;">
+                <h5>Total Bill Received</h5>
+                <h1>Rs. {{bill}}</h1>
+            </div>
+        </div>
+        <div id="first-one">
+
+            <div class="my-2">
+                <h3 class="mx-2 text-center text-light"> Status of Bookings</h3>
+                <img src="/static/admin_1.png" alt="Status Graphs">
+            </div>
+            <div class="my-2">
+                <h3 class="mx-2 text-center text-light"> Revenue Breakdown of Current Lots</h3>
+                <img class="d-flex justify-content-center" src="/static/admin_2.png" alt="Revenue Graphs">
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.8s forwards';
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('#first-one').forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(30px)';
+                observer.observe(el);
+            });
+        });
+    </script>
+
+</body>
+
+
+</html>

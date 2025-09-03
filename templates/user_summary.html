@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+
+<body>
+    <div id="main">
+        <nav class="navbar navbar-expand-lg text-bg-dark p-3 ">
+            <div class="container-fluid">
+                <a class="navbar-brand text-light" href="/dashboard/{{user.id}}">Welcome {{user.name}}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-light  " href="/dashboard/{{user.id}}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn btn-outline-danger disabled active" href="/user_summary/{{user.id}}">Summary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/login">Log out</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <a href="/edit-details/{{user.id}}" class="btn btn-outline-primary text-light" id="edit">Edit Profile</a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div id="canvas" class="overflow-auto">
+            <h1 class="text-center text-light"> Your Summary</h1>
+            <div class="d-flex justify-content-evenly text-center">
+                <div class="card bg-danger p-3 me-5 "  style="color: white;"    >
+                    <h5>Occupied</h5>
+                    <h1>{{active}}</h1>
+                </div>
+                <div class="card bg-success p-3 me-5"  style="color: white;">
+                    <h5>Parked Out</h5>
+                    <h1>{{previous}}</h1>
+                </div>
+                <div class="card bg-secondary p-3"  style="color: white;">
+                    <h5>Total Bill Paid</h5>
+                    <h1>Rs. {{bill}}</h1>
+                </div>
+            </div>
+            <div id="first-one">
+                
+                <div class="my-2">
+                    <h3 class="mx-2 text-center text-light"> Price paid at all Lots</h3>
+                    <img src="/static/user_bar2.png" alt="Bar Graph">
+                </div>
+                <div class="my-2">
+                    <h3 class="mx-2 text-center text-light"> Status of Bookings</h3>
+                    <img src="/static/user_bar.png" alt="Bar Graph">
+                </div>
+                <div class="my-2">
+                    <h3 class="mx-2"> Status of Bookings</h3>
+                    <img src="/static/user_pie.png" alt="Pie chart">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

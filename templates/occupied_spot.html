@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Occupied Lot </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/form.css">
+</head>
+
+<body>
+    <form id="form-content" action="#" method="post" enctype="multipart/form-data">
+        <h4 id="heading">Occupied Parking Spot Details</D etails>
+        </h4>
+        <div class="mb-3">
+            <label for="spotid" class="form-label"> Spot ID:</label>
+            <input type="text" class="form-control" id="spotid" value="{{spot.id}}" disabled required>
+        </div>
+        <div class="mb-3">
+            <label for="customerid" class="form-label">Name, (ID):</label>
+            <input type="text" class="form-control" id="customerid" value="{{user.name}},({{reserved.user_id}})"
+                disabled required>
+        </div>
+        <div class="mb-3">
+            <label for="vehicleno" class="form-label">Vehicle No.:</label>
+            <input type="text" class="form-control" id="vehicleno" value="{{reserved.vehicle_no}}" disabled required>
+        </div>
+        <div class="mb-3">
+            <label for="parkingtime" class="form-label">Time of Parking:</label>
+            <input type="datetime-local" class="form-control" id="parkingtime" value="{{  parking_time_str}}" disabled
+                required>
+        </div>
+        <div class="mb-3">
+            <label for="estcost" class="form-label">Est. Parking Cost (till now):</label>
+            <input type="number" class="form-control" id="estcost" value="{{cost}}" disabled required>
+        </div>
+        <div class="text-center">
+            <a role="button" class="btn btn-danger" href="/dashboard/admin" style="margin-bottom: 5px;">Close</a>
+        </div>
+    </form>
+</body>
+
+</html>

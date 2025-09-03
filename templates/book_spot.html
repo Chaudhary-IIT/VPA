@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Book Spot </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/form.css">
+</head>
+
+<body>
+    <form id="form-content" action="/book_spot/{{id}}/{{lot}}" method="POST" enctype="multipart/form-data">
+        <h3 id="heading">Book the Parking Spot</h3>
+        <div class="mb-3">
+            <label for="spotid" class="form-label">Spot ID:</label>
+            <input type="text" class="form-control" id="spotid" name="spot"  required value="{{spot.id}}">
+        </div>
+        <div class="mb-3">
+            <label for="lotid" class="form-label">Lot ID:</label>
+            <input type="text" class="form-control" id="lotid" name="lotid" disabled required value="{{lot}}">
+        </div>
+        <div class="mb-3">
+            <label for="userid" class="form-label">User ID:</label>
+            <input type="text" class="form-control" id="userid" name="userid" disabled required value="{{id}}">
+        </div>
+        <div class="mb-3">
+            <label for="vehicleid" class="form-label">Vehicle No.:</label>
+            <input type="text" class="form-control" id="vehicleid" name="vehicle" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success me-5" style="margin-bottom: 5px ">Book</button>
+            <a role="button" class="btn btn-danger" href="/dashboard/{{id}}" style="margin-bottom: 5px;">Cancel</a>
+        </div>
+    </form>
+</body>
+
+</html>

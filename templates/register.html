@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/form.css">
+</head>
+
+<body>
+    <form id="form-content" action="/register" method="post" enctype="multipart/form-data">
+        <h1 id="heading">Register</h1>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="Email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="Email" name="email" placeholder="abc@xyz.com" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="pwd" required>
+            <div class="form-text">Enter a strong password!</div>
+        </div>
+        <div class="mb-3">
+            <label for="confirm-password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirm-password" required>
+            <div id="confirm-msg" class="form-text text-danger" style="display:none;"><b>Passwords do not match!</b>
+            </div>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="tnc" required>
+            <label class="form-check-label" for="tnc">I agree to all Terms & Conditions.</label>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mb-2 gradient-btn">Register</button><br>
+            <span>Already a user? <a href="/login" class="text-info">Login</a></span>
+        </div>
+    </form>
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error-alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{ error }}
+    </div>
+
+    {% endif %}
+
+    <script>
+        document.getElementById('form-content').addEventListener('submit', function (e) {
+            const pwd = document.getElementById('password').value;
+            const conf = document.getElementById('confirm-password').value;
+            const msg = document.getElementById('confirm-msg');
+            if (pwd !== conf) {
+                msg.style.display = 'block';
+                e.preventDefault();
+            } else {
+                msg.style.display = 'none';
+            }
+        });
+
+        // Live checking as the user types
+        document.getElementById('confirm-password').addEventListener('input', function () {
+            const pwd = document.getElementById('password').value;
+            const conf = document.getElementById('confirm-password').value;
+            const msg = document.getElementById('confirm-msg');
+            if (pwd && conf && pwd !== conf) {
+                msg.style.display = 'block';
+            } else {
+                msg.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

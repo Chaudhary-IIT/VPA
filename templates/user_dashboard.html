@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/dashboard.css">
+</head>
+
+<body>
+    <div id="main">
+        <nav class="navbar navbar-expand-lg text-bg-dark p-3 ">
+            <div class="container-fluid">
+                <a class="navbar-brand text-light" href="/dashboard/{{user.id}}">Welcome {{user.name}}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-light btn btn-outline-danger disabled active"
+                                href="/dashboard/{{user.id}}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/user_summary/{{user.id}}">Summary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="/login">Log out</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <a href="/edit-details/{{user.id}}" class="btn btn-outline-primary text-light" id="edit">Edit Profile</a>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div id="canvas" class="overflow-auto">
+            <div id="first-one">
+                <h1 class="text-center text-light"> Recent Parking History</h1>
+                <div style="max-height:300px;overflow-y: scroll;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sr. No.</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Vehicle No.</th>
+                                <th scope="col">Booking Time</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for reserve in reserved[::-1]%}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{reserve.holder.main.address}}</td>
+                                <td>{{reserve.vehicle_no}}</td>
+                                <td>{{reserve.parking_datetime[-5:]}}  {{reserve.parking_datetime[:10]}}</td>
+                                {% if reserve.leaving_timestamp==0 %}
+                                <td><a role="button" href="/release_spot/{{reserve.id}}" class="btn btn-danger">Release</a></td>
+                                {%else%}
+                                <td><button type="button" class="btn btn-success">Parked Out</button></td>
+                                {%endif%}
+                            </tr>
+                            {%endfor%}
+                            {%for reserve in hist[::-1]%}
+                            {%if  reserve.leaving_timestamp %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{reserve.address}}</td>
+                                <td>{{reserve.vehicle_no}}</td>
+                                <td>{{reserve.parking_datetime[-5:]}}  {{reserve.parking_datetime[:10]}}</td>
+                                {% if reserve.leaving_timestamp==0 %}
+                                <td><a role="button" href="/release_spot/{{reserve.id}}" class="btn btn-danger">Release</a></td>
+                                {%else%}
+                                <td><button type="button" class="btn btn-success">Parked Out</button></td>
+                                {%endif%}
+                            </tr>
+                            {%endif%}
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="second-one">
+                <div class="hstack gap-3 text-bg-secondary p-3">
+                    <form class="hstack gap-3  p-3 w-100" action="/search_lots/{{user.id}}">
+                        <input class="form-control flex-grow-1" type="text" placeholder="Search for address"
+                            aria-label="Search for address" name="search">
+                        <select class="form-select" aria-label="Default select example" name="key">
+                            <option selected value="pincode">Pincode</option>
+                            <option value="location">Location</option>
+                        </select>
+                        <button type="submit" class="btn btn-success">Search</button>
+                        <div class="vr"></div>
+                        <a role="button" class="btn btn-outline-danger text-light me-2"
+                            href="/dashboard/{{user.id}}">Reset</a>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class=" p-3">
+                <h4 class="text-center text-light">Available Parking Lots:</h4>
+            </div>
+            <div style="max-height:300px;overflow-y: scroll;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sr. No.</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Pincode</th>
+                            <th scope="col">Availability</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for lot in lots%}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{lot.location_name}}</td>
+                            <td>{{lot.address}}</td>
+                            <td>{{lot.pincode}}</td>
+                            <td>{{lot.available_spots}}</td>
+                            {%if lot.available_spots>0%}
+                            <td><a role="button" class="btn btn-warning"
+                                    href="/book_spot/{{user.id}}/{{lot.id}}">Book</a></td>
+                            {%else%}
+                            <td><a role="button" class="btn btn-danger disabled">Book</a></td>
+                            {%endif%}
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+
+</html>
